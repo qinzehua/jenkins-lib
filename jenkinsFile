@@ -1,0 +1,89 @@
+#!groovy
+
+@Library('qin-share')
+
+def tools = new org.devops.tools()
+
+String workspace = "/opt/jenkins/workspace"
+
+pipeline {
+    agent {
+        node {
+            label 'master'
+            customWorkspace "${workspace}"
+        }
+    }
+    // 定义临时参数，需要执行一遍之后才会生效，不同于项目配置里面的参数
+    // 在图形配置里面可以显示的参数，都可以在这里实现
+    parameters {
+        string(name: "DEPLOY_ENV", defaultValue: 'staging', description: '')
+        booleanParam(name: "DEBUG_BUILD", defaultValue: true, description: '')
+    }
+    options {
+        timestamps() //日志会有时间
+        skipDefaultCheckout() // 删除隐式checkout scm 语句
+        disableConcurrentBuilds() //禁止并行
+        timeout(time: 1, unit: 'HOURS') //设置流水线超时时间1h
+    }
+    
+    stages {
+        stage('GetCode'){
+            when {
+                environment name: 'DEPLOY_ENV', value: 'dev'
+            }
+            steps{
+                timeout(time: 5, unit: 'MINUTES') {
+                    script {
+                        println('获取代码')
+                        println("${version}") // 从项目配置中获取的参数
+                        // 在构建过程中会弹出一个确认框，用于选定参数
+                        input id: 'Confirm-id', message: '是否继续', ok: '继续', parameters: [choice(choices: ['1', '2', '3'], description: '', name: '并发数')], submitter: 'qinzehua,admin'
+                    }
+                    echo "-----------"
+                }
+            }
+        }
+        stage('Build'){
+            steps{
+                timeout(time: 20, unit: 'MINUTES') {
+                    script {
+                        println('应用打包')
+                    }
+                }
+            }
+        }
+        stage('CodeScan'){
+            steps{
+                timeout(time: 30, unit: 'MINUTES') {
+                    script {
+                        println('代码扫描')
+                        tools.PrintMes('我是share代码仓库里面的函数')
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            script {
+                println('always')
+            }
+        }
+        success {
+            script {
+                currentBuild.description = '构建成功'
+            }
+        }
+        failure {
+            script {
+                currentBuild.description = '构建失败'
+            }
+        }
+        aborted {
+            script {
+                currentBuild.description = '构建取消'
+            }
+        }
+    }
+}
