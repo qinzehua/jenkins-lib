@@ -35,7 +35,8 @@ pipeline {
                 timeout(time: 5, unit: 'MINUTES') {
                     script {
                         tools.PrintMes('获取代码', 'blue')
-                        println("${version}") // 从项目配置中获取的参数
+                        tools.PrintMes("${version}", 'blue') // 从项目配置中获取的参数
+                
                         // 在构建过程中会弹出一个确认框，用于选定参数
                         input id: 'Confirm-id', message: '是否继续', ok: '继续', parameters: [choice(choices: ['1', '2', '3'], description: '', name: '并发数')], submitter: 'qinzehua,admin'
                     }
