@@ -8,8 +8,8 @@ def SonarScan(projectName, des, path) {
         sonarDate = sonarDate - '\n'
         sh """
             ${scannerHome}/bin/sonar-scanner \
-            -Dsonar.projectKey=${projectName}  \
-            -Dsonar.projectName=${projectName}  \
+            -Dsonar.projectKey=vue-test-demo01  \
+            -Dsonar.projectName=vue-test-demo01  \
             -Dsonar.projectVersion=${sonarDate} \
             -Dsonar.ws.timeout=30 \
             -Dsonar.projectDescription=${des}  \
