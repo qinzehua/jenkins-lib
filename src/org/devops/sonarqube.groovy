@@ -1,5 +1,7 @@
 package org.devops
 
+def qg = waitForQualityGate()
+
 def SonarScan(projectName, des, path) {
     withSonarQubeEnv('sonarqube-test') {
         def scannerHome = '/usr/local/sonar-scanner-4.4.0.2170-linux/'
@@ -20,5 +22,9 @@ def SonarScan(projectName, des, path) {
             #-Dsonar.java.test.binaries=target/test-classes \
             #-Dsonar.java.surefire.report=target/surefire-reports
             """
+
+            if (qg.status != 'OK') {
+            error "pipline aborted due to quality gate failure:${qg.status}"
+            }
     }
 }
