@@ -22,9 +22,5 @@ def SonarScan(projectName, des, path) {
             #-Dsonar.java.test.binaries=target/test-classes \
             #-Dsonar.java.surefire.report=target/surefire-reports
             """
-
-            if (qg.status != 'OK') {
-            error "pipline aborted due to quality gate failure:${qg.status}"
-            }
     }
 }
