@@ -7,7 +7,7 @@ def SonarScan(projectName, des, path) {
         sonarDate = sh returnStdout: true, script: 'date +%Y%m%d%H%m%s'
         sonarDate = sonarDate - '\n'
         sh """
-            ${scannerHome}/bin/sonar-scanner
+            ${scannerHome}/bin/sonar-scanner \
             -Dsonar.projectKey=${projectName}  \
             -Dsonar.projectName=${projectName}  \
             -Dsonar.projectVersion=${sonarDate} \
