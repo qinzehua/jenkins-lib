@@ -17,6 +17,17 @@ def GetStatus(projectName) {
     apiUrl = "project_branches/list?project=${projectName}"
     response = HttpReq('GET', apiUrl, '')
     response = readJSON text: """${response.content}"""
-    println(response)
-    return response
+    result = response['branches'][0]['status']['qualityGateStatus']
+    return result
+}
+
+def SearchProject(projectName) {
+    apiUrl = "projects/search?projects=${projectName}"
+    response = HttpReq('GET', apiUrl, '')
+    response = readJSON text: """${response.content}"""
+    result = response['paging']['total']
+    if (result.toString() == 0) {
+        return false
+    }
+    return true
 }
