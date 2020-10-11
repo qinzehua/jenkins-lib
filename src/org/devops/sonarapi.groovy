@@ -36,9 +36,6 @@ def CreateProject(projectName) {
     apiUrl = "projects/create?name=${projectName}&project=${projectName}"
     response = HttpReq('POST', apiUrl, '')
     response = readJSON text: """${response.content}"""
-    result = response['paging']['total']
-    if (result.toString() == 0) {
-        return false
-    }
+    println(response)
     return true
 }
