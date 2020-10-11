@@ -7,16 +7,18 @@ def SonarScan(projectName, des, path) {
         sonarDate = sh returnStdout: true, script: 'date +%Y%m%d%H%m%s'
         sonarDate = sonarDate - '\n'
         sh """
-            ${scannerHome}/bin/sonar-scanner \
-            -Dsonar.projectKey=vue-test-demo01  \
-            -Dsonar.projectName=vue-test-demo01  \
+            ${scannerHome}/bin/sonar-scanner  \
+            -Dsonar.projectKey=${projectName}  \
+            -Dsonar.projectName=${projectName}  \
             -Dsonar.projectVersion=${sonarDate} \
             -Dsonar.ws.timeout=30 \
             -Dsonar.projectDescription=${des}  \
             -Dsonar.links.homepage=http://www.baidu.com \
             -Dsonar.sources=${path} \
             -Dsonar.sourceEncoding=UTF-8 \
-
+            #-Dsonar.java.binaries=target/classes \
+            #-Dsonar.java.test.binaries=target/test-classes \
+            #-Dsonar.java.surefire.report=target/surefire-reports
             """
     }
 }
