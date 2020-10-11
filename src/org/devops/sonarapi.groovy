@@ -13,7 +13,7 @@ def HttpReq(reqType, reqUrl, reqBody) {
 }
 
 // 获取sonar状态
-def GetStatus(projectName, commitSha, status) {
+def GetStatus(projectName) {
     apiUrl = "project_branches/list?project=${projectName}"
     response = HttpReq('GET', apiUrl, '')
     response = readJSON text: """${response.content}"""
