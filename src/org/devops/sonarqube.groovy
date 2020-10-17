@@ -19,9 +19,6 @@ def SonarScan(projectName, des, path) {
             -Dsonar.sources=${path} \
             -Dsonar.sourceEncoding=UTF-8 \
             -Dsonar.javascript.lcov.reportPath=coverage/lcov.info
-            #-Dsonar.java.binaries=target/classes \
-            #-Dsonar.java.test.binaries=target/test-classes \
-            #-Dsonar.java.surefire.report=target/surefire-reports
             """
     }
 }
