@@ -45,4 +45,5 @@ def ConfigQualityProfiles( projectName, language, qpame) {
     aipUrl = "qualityprofiles/add_project?project=${projectName}&language=${language}&qualityProfile=${qpame}"
     response = HttpReq('POST', apiUrl, '')
     println(response)
+    return response
 }
