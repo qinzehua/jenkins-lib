@@ -39,3 +39,10 @@ def CreateProject(projectName) {
     println(response)
     return true
 }
+
+//配置规则
+def ConfigQualityProfiles( projectName, lang, qpame) {
+    aipUrl = "qualityprofiles/add_project?project=${projectName}&lang=${lang}&qualityProfile=${qpame}"
+    response = HttpReq('POST', apiUrl, '')
+    println(response)
+}
