@@ -44,6 +44,7 @@ def CreateProject(projectName) {
 def ConfigQualityProfiles( projectName, language, qpame) {
     apiUrl = "qualityprofiles/add_project?project=${projectName}&language=${language}&qualityProfile=${qpame}"
     response = HttpReq('POST', apiUrl, '')
+    response = readJSON text: """${response.content}"""
     println(response)
     return response
 }
