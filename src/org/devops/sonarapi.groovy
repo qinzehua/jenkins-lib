@@ -46,5 +46,5 @@ def ConfigQualityProfiles( projectName, language, qpame) {
     response = HttpReq('POST', apiUrl, '')
     response = readJSON text: """${response.content}"""
     println(response)
-    return response
+    return true
 }
