@@ -48,3 +48,23 @@ def ConfigQualityProfiles( projectName, language, qpame) {
     println(response)
     return true
 }
+
+//获取质量阈的id
+def ConfigQualityGateId(gateName) {
+    apiUrl = "qualitygates/show?name=${gateName}"
+    response = HttpReq('GET', apiUrl, '')
+    response = readJSON text: """${response.content}"""
+    gateId = response['id']
+    println(response)
+    return gateId
+}
+
+//配置项目质量阈
+def ConfigQualityGate(projectName, gateName) {
+    gateId = ConfigQualityGateId(gateName)
+    apiUrl = "qualitygates/select?gateId=${gateId}&projectKey=${projectName}"
+    response = HttpReq('POST', apiUrl, '')
+    response = readJSON text: """${response.content}"""
+    println(response)
+    return true
+}
